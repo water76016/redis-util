@@ -5,9 +5,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Collection;
-import java.util.Set;
-import java.util.Collections;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -91,5 +89,83 @@ public class RedisUtils {
     public Long getExpire(String key){
         return redisTemplate.getExpire(key);
     }
+
+    /*********************************String相关操作**********************/
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月19 23:21:05
+     * @description: 设置key的值为value
+     * @param: key
+     * @param: value
+     * @return: void
+     */
+    public void set(String key, String value){
+        redisTemplate.opsForValue().set(key, value);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月19 23:25:09
+     * @description: 获取key的值
+     * @param: key
+     * @return: java.lang.Object
+     */
+    public Object get(String key){
+        return redisTemplate.opsForValue().get(key);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月19 23:26:08
+     * @description: 获取旧的值，并设置新的值
+     * @param: key
+     * @param: value
+     * @return: java.lang.Object
+     */
+    public Object getAndSet(String key, String value){
+        return redisTemplate.opsForValue().getAndSet(key, value);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月19 23:27:33
+     * @description: 批量获取值
+     * @param: keys
+     * @return: java.util.List<java.lang.String>
+     */
+    public List<String> multiGet(Collection<String> keys){
+        return redisTemplate.opsForValue().multiGet(keys);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月19 23:28:32
+     * @description: 只有当key不存在时，才设置值（用于插入）
+     * @param: key
+     * @param: value
+     * @return: boolean
+     */
+    public boolean setIfAbsent(String key, String value){
+        return redisTemplate.opsForValue().setIfAbsent(key, value);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月19 23:29:58
+     * @description: 批量添加值
+     * @param: maps
+     * @return: void
+     */
+    public void multiSet(Map<String, Object> maps){
+        redisTemplate.opsForValue().multiSet(maps);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月19 23:32:15
+     * @description: 将key的值自增increment个数量。若increment为负数，则为自减
+     * @param: key
+     * @param: increment
+     * @return: java.lang.Long
+     */
+    public Long increment(String key, long increment){
+        return redisTemplate.opsForValue().increment(key);
+    }
+
+
 
 }
