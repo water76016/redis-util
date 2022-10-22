@@ -1,6 +1,6 @@
 package com.water76016.redisutils.uitl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -76,7 +76,7 @@ public class RedisUtils {
      * @param: key
      * @return: java.lang.Boolean
      */
-    public Boolean persist(String key){
+    public static Boolean persist(String key){
         return redisTemplate.persist(key);
     }
     /**
@@ -86,7 +86,7 @@ public class RedisUtils {
      * @param: key
      * @return: java.lang.Long
      */
-    public Long getExpire(String key){
+    public static Long getExpire(String key){
         return redisTemplate.getExpire(key);
     }
 
@@ -99,7 +99,7 @@ public class RedisUtils {
      * @param: value
      * @return: void
      */
-    public void set(String key, String value){
+    public static void set(String key, String value){
         redisTemplate.opsForValue().set(key, value);
     }
     /**
@@ -109,7 +109,7 @@ public class RedisUtils {
      * @param: key
      * @return: java.lang.Object
      */
-    public Object get(String key){
+    public static Object get(String key){
         return redisTemplate.opsForValue().get(key);
     }
     /**
@@ -120,7 +120,7 @@ public class RedisUtils {
      * @param: value
      * @return: java.lang.Object
      */
-    public Object getAndSet(String key, String value){
+    public static Object getAndSet(String key, String value){
         return redisTemplate.opsForValue().getAndSet(key, value);
     }
     /**
@@ -130,7 +130,7 @@ public class RedisUtils {
      * @param: keys
      * @return: java.util.List<java.lang.String>
      */
-    public List<String> multiGet(Collection<String> keys){
+    public static List<String> multiGet(Collection<String> keys){
         return redisTemplate.opsForValue().multiGet(keys);
     }
     /**
@@ -141,7 +141,7 @@ public class RedisUtils {
      * @param: value
      * @return: boolean
      */
-    public boolean setIfAbsent(String key, String value){
+    public static boolean setIfAbsent(String key, String value){
         return redisTemplate.opsForValue().setIfAbsent(key, value);
     }
     /**
@@ -151,7 +151,7 @@ public class RedisUtils {
      * @param: maps
      * @return: void
      */
-    public void multiSet(Map<String, Object> maps){
+    public static void multiSet(Map<String, Object> maps){
         redisTemplate.opsForValue().multiSet(maps);
     }
     /**
@@ -162,10 +162,91 @@ public class RedisUtils {
      * @param: increment
      * @return: java.lang.Long
      */
-    public Long increment(String key, long increment){
+    public static Long increment(String key, long increment){
         return redisTemplate.opsForValue().increment(key);
     }
 
+    /**************************Hash相关********************************/
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月22 22:47:14
+     * @description: 向hash中添加值
+     * @param: key
+     * @param: field
+     * @param: value
+     * @return: void
+     */
+    public static void hput(String key, String field, Object value){
+        redisTemplate.opsForHash().put(key, field, value);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月22 22:56:58
+     * @description: 批量往Redis中添加值
+     * @param: key
+     * @param: map
+     * @return: void
+     */
+    public static void hputAll(String key, Map<String, Object> map){
+        redisTemplate.opsForHash().putAll(key, map);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月22 22:58:26
+     * @description: 获取hash中的值
+     * @param: key
+     * @param: field
+     * @return: java.lang.Object
+     */
+    public static Object hGet(String key, String field){
+        return redisTemplate.opsForHash().get(key, field);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月22 22:59:56
+     * @description: 批量获取hash中的值
+     * @param: key
+     * @param: fieldList
+     * @return: java.util.List<java.lang.Object>
+     */
+    public static List<Object> hGetAll(String key, List<String> fieldList){
+        return redisTemplate.opsForHash().multiGet(key, fieldList);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月22 23:02:30
+     * @description: 仅当hash中不存在该值时才设置成功。
+     * @param: key
+     * @param: field
+     * @param: value
+     * @return: java.lang.Boolean
+     */
+    public Boolean hPutIfAbsent(String key, String field, Object value){
+        return redisTemplate.opsForHash().putIfAbsent(key, field, value);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月22 23:04:53
+     * @description: 删除一个或多个hash中的field，返回删除成功的field的数量
+     * @param: key
+     * @param: fields
+     * @return: java.lang.Long
+     */
+    public Long hDelete(String key, String ... fields){
+        return redisTemplate.opsForHash().delete(key, fields);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月22 23:06:44
+     * @description: 判断hash中是否有某个field
+     * @param: key
+     * @param: field
+     * @return: java.lang.Boolean
+     */
+    public Boolean hHasKey(String key, String field){
+        return redisTemplate.opsForHash().hasKey(key, field);
+    }
+    //todo:获取所有哈希表中的字段
 
 
 }
