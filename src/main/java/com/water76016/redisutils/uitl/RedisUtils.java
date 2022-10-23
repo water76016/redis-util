@@ -246,7 +246,38 @@ public class RedisUtils {
     public Boolean hHasKey(String key, String field){
         return redisTemplate.opsForHash().hasKey(key, field);
     }
-    //todo:获取所有哈希表中的字段
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月22 23:15:33
+     * @description: 获取某个哈希中的所有字段
+     * @param: key
+     * @return: java.util.Set<java.lang.String>
+     */
+    public Set<String> hKeys(String key){
+        return redisTemplate.opsForHash().keys(key);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月22 23:17:24
+     * @description: 获取某个哈希中字段的数量
+     * @param: key
+     * @return: java.lang.Long
+     */
+    public Long hSize(String key){
+        return redisTemplate.opsForHash().size(key);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月22 23:19:06
+     * @description: 获取某个哈希中所有的值
+     * @param: key
+     * @return: java.util.List<java.lang.Object>
+     */
+    public List<Object> hValues(String key){
+        return redisTemplate.opsForHash().values(key);
+    }
+
+    /*********************List相关方法**************/
 
 
 }
