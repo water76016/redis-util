@@ -278,6 +278,152 @@ public class RedisUtils {
     }
 
     /*********************List相关方法**************/
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月23 23:58:22
+     * @description: 通过索引获取Redis中的元素
+     * @param: key
+     * @param: index
+     * @return: java.lang.Object
+     */
+    public static Object lIndex(String key, long index){
+        return redisTemplate.opsForList().index(key, index);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月23 23:59:40
+     * @description: 获取指定范围内的List的元素
+     * @param: key
+     * @param: start
+     * @param: end
+     * @return: java.util.List<java.lang.String>
+     */
+    public static List<String> lRange(String key, long start, long end){
+        return redisTemplate.opsForList().range(key, start, end);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:01:30
+     * @description: 从List的头部插入元素
+     * @param: key
+     * @param: value
+     * @return: java.lang.Long
+     */
+    public static Long lLeftPush(String key, Object value){
+        return redisTemplate.opsForList().leftPush(key, value);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:03:54
+     * @description: 从List的头部一次性插入多个元素
+     * @param: key
+     * @param: values
+     * @return: java.lang.Long
+     */
+    public static Long lLeftPushAll(String key, Object ... values){
+        return redisTemplate.opsForList().leftPushAll(key, values);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:05:43
+     * @description: 从List的头部一次性插入多个元素
+     * @param: key
+     * @param: values
+     * @return: java.lang.Long
+     */
+    public static Long lLeftPushAll(String key, Collection<Object> values){
+        return redisTemplate.opsForList().leftPushAll(key, values);
+    }
+
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:01:30
+     * @description: 从List的尾部插入元素
+     * @param: key
+     * @param: value
+     * @return: java.lang.Long
+     */
+    public static Long lrightPush(String key, Object value){
+        return redisTemplate.opsForList().rightPush(key, value);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:03:54
+     * @description: 从List的尾部一次性插入多个元素
+     * @param: key
+     * @param: values
+     * @return: java.lang.Long
+     */
+    public static Long lrightPushAll(String key, Object ... values){
+        return redisTemplate.opsForList().rightPushAll(key, values);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:05:43
+     * @description: 从List的尾部一次性插入多个元素
+     * @param: key
+     * @param: values
+     * @return: java.lang.Long
+     */
+    public static Long lrightPushAll(String key, Collection<Object> values){
+        return redisTemplate.opsForList().rightPushAll(key, values);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:10:30
+     * @description: 从列表的头部弹出并删除一个元素
+     * @param: key
+     * @return: java.lang.Object
+     */
+    public static Object lLeftPop(String key){
+        return redisTemplate.opsForList().leftPop(key);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:12:56
+     * @description: 从列表的头部弹出并删除一个元素，若元素没有，则阻塞等待一定时间。
+     * @param: key
+     * @param: timeout
+     * @param: timeUnit
+     * @return: java.lang.Object
+     */
+    public static Object lLeftPop(String key, long timeout, TimeUnit timeUnit){
+        return redisTemplate.opsForList().leftPop(key, timeout, timeUnit);
+    }
+
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:10:30
+     * @description: 从列表的尾部弹出并删除一个元素
+     * @param: key
+     * @return: java.lang.Object
+     */
+    public static Object lrightPop(String key){
+        return redisTemplate.opsForList().rightPop(key);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:12:56
+     * @description: 从列表的尾部弹出并删除一个元素，若元素没有，则阻塞等待一定时间。
+     * @param: key
+     * @param: timeout
+     * @param: timeUnit
+     * @return: java.lang.Object
+     */
+    public static Object lrightPop(String key, long timeout, TimeUnit timeUnit){
+        return redisTemplate.opsForList().rightPop(key, timeout, timeUnit);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:21:42
+     * @description: 获取列表的长度
+     * @param: key
+     * @return: java.lang.Long
+     */
+    public static Long lSize(String key){
+        return redisTemplate.opsForList().size(key);
+    }
+
 
 
 }
