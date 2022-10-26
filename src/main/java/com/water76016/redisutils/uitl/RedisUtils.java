@@ -424,6 +424,145 @@ public class RedisUtils {
         return redisTemplate.opsForList().size(key);
     }
 
+    /*****************Set相关操作**********************/
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:38:52
+     * @description: 往集合中添加元素（支持一次添加多个）
+     * @param: key
+     * @param: value
+     * @return: java.lang.Long
+     */
+    public Long sAddAll(String key, Object... values){
+        return redisTemplate.opsForSet().add(values);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:40:44
+     * @description: 移除集合中的元素
+     * @param: key
+     * @param: values
+     * @return: java.lang.Long
+     */
+    public Long sRemove(String key, Object values){
+        return redisTemplate.opsForSet().remove(key, values);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:41:50
+     * @description: 随机弹出集合中的某个元素
+     * @param: key
+     * @return: java.lang.Object
+     */
+    public Object sPop(String key){
+        return redisTemplate.opsForSet().pop(key);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:42:55
+     * @description: 随机弹出集合中的多个元素
+     * @param: key
+     * @param: count
+     * @return: java.util.List<java.lang.Object>
+     */
+    public List<Object> sPop(String key, long count){
+        return redisTemplate.opsForSet().pop(key, count);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:43:51
+     * @description: 获取集合的大小
+     * @param: key
+     * @return: java.lang.Long
+     */
+    public Long sSize(String key){
+        return redisTemplate.opsForSet().size(key);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:44:48
+     * @description: 判断集合中是否包含某个值
+     * @param: key
+     * @param: value
+     * @return: java.lang.Boolean
+     */
+    public Boolean sIsMember(String key, Object value){
+        return redisTemplate.opsForSet().isMember(key, value);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:47:03
+     * @description: 获取两个集合之间的交集
+     * @param: key
+     * @param: otherKey
+     * @return: java.util.Set<java.lang.Object>
+     */
+    public Set<Object> sIntersect(String key, String otherKey){
+        return redisTemplate.opsForSet().intersect(key, otherKey);
+    }
+
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:47:03
+     * @description: 获取多个集合之间的交集
+     * @param: key
+     * @param: otherKey
+     * @return: java.util.Set<java.lang.Object>
+     */
+    public Set<Object> sIntersect(String key, Set<String> otherKey){
+        return redisTemplate.opsForSet().intersect(key, otherKey);
+    }
+
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:47:03
+     * @description: 获取多个集合之间的交集
+     * @param: key
+     * @param: otherKey
+     * @return: java.util.Set<java.lang.Object>
+     */
+    public Set<Object> sIntersect(Set<String> keys){
+        return redisTemplate.opsForSet().intersect(keys);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:49:56
+     * @description: 获取两个集合之间的并集
+     * @param: key
+     * @param: otherKey
+     * @return: java.util.Set<java.lang.Object>
+     */
+    public Set<Object> sUnion(String key, String otherKey){
+        return redisTemplate.opsForSet().union(key, otherKey);
+    }
+
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:49:56
+     * @description: 获取多个集合之间的并集
+     * @param: key
+     * @param: otherKey
+     * @return: java.util.Set<java.lang.Object>
+     */
+    public Set<Object> sUnion(String key, Set<String> otherKey){
+        return redisTemplate.opsForSet().union(key, otherKey);
+    }
+
+    /**
+     * @author: water76016
+     * @createTime: 2022年10月24 00:49:56
+     * @description: 获取多个集合之间的并集
+     * @param: key
+     * @param: otherKey
+     * @return: java.util.Set<java.lang.Object>
+     */
+    public Set<Object> sUnion(Set<String> keys){
+        return redisTemplate.opsForSet().union(keys);
+    }
+    //todo:获取交集并集的结果，并存储起来
+
+
+
 
 
 }
