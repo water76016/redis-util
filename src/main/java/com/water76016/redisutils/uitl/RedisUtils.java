@@ -559,7 +559,100 @@ public class RedisUtils {
     public Set<Object> sUnion(Set<String> keys){
         return redisTemplate.opsForSet().union(keys);
     }
-    //todo:获取交集并集的结果，并存储起来
+    /**
+     * @author: water76016
+     * @createTime: 2022年11月08 23:30:51
+     * @description: 把key集合与otherKey集合的并集存储到destKey中
+     * @param: key
+     * @param: otherKey
+     * @param: destKey
+     * @return: java.lang.Long
+     */
+    public Long sUnionAndStore(String key, String otherKey, String destKey){
+        return redisTemplate.opsForSet().unionAndStore(key, otherKey, destKey);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年11月08 23:32:41
+     * @description: 把key集合与多个集合的并集存储到destKey中
+     * @param: key
+     * @param: otherKeys
+     * @param: destKey
+     * @return: java.lang.Long
+     */
+    public Long sUnionAndStore(String key, Collection<String> otherKeys, String destKey){
+        return redisTemplate.opsForSet().unionAndStore(key, otherKeys, destKey);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年11月08 23:41:48
+     * @description: 获取一个集合与另一个集合的差集
+     * @param: key
+     * @param: otherKey
+     * @return: java.util.Set<java.lang.String>
+     */
+    public Set<String> sDifference(String key, String otherKey){
+        return redisTemplate.opsForSet().difference(key, otherKey);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年11月08 23:44:03
+     * @description: 获取一个集合与多个集合的差集
+     * @param: key
+     * @param: otherKeys
+     * @return: java.util.Set<java.lang.String>
+     */
+    public Set<String> sDifference(String key, Collection<String> otherKeys){
+        return redisTemplate.opsForSet().difference(key, otherKeys);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年11月08 23:49:26
+     * @description: 获取一个集合与另一个集合的差集，并存储到destKey中
+     * @param: key
+     * @param: otherKey
+     * @param: destKey
+     * @return: java.lang.Long
+     */
+    public Long sDifferenceAndStore(String key, String otherKey, String destKey){
+        return redisTemplate.opsForSet().differenceAndStore(key, otherKey, destKey);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年11月08 23:53:28
+     * @description: 获取一个集合与多个集合的差集，并存储到destKey中
+     * @param: key
+     * @param: otherKeys
+     * @param: destKey
+     * @return: java.lang.Long
+     */
+    public Long sDifferenceAndStore(String key, Collection<String> otherKeys, String destKey){
+        return redisTemplate.opsForSet().differenceAndStore(key, otherKeys, destKey);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年11月08 23:55:05
+     * @description: 获取一个集合的所有元素
+     * @param: key
+     * @return: java.util.Set<java.lang.String>
+     */
+    public Set<String> sMembers(String key){
+        return redisTemplate.opsForSet().members(key);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年11月08 23:58:39
+     * @description: 随机返回集合中的一个元素
+     * @param: key
+     * @return: java.lang.Object
+     */
+    public Object sRandomMembers(String key){
+        return redisTemplate.opsForSet().randomMember(key);
+    }
+    //todo:这个方法的返回值不知道写什么
+//    public List<Object> sRandomMembers(String key, long count){
+//        return redisTemplate.opsForSet().randomMember(key, count);
+//    }
 
 
 
