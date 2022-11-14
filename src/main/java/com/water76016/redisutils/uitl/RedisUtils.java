@@ -2,6 +2,8 @@ package com.water76016.redisutils.uitl;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -10,10 +12,10 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class RedisUtils {
-    private static RedisTemplate redisTemplate;
+    private static StringRedisTemplate redisTemplate;
 
     @Resource
-    public void setRedisTemplate(RedisTemplate redisTemplate) {
+    public void setRedisTemplate(StringRedisTemplate redisTemplate) {
         RedisUtils.redisTemplate = redisTemplate;
     }
     //***************************************key相关********************************
@@ -24,7 +26,7 @@ public class RedisUtils {
      * @param: pattern
      * @return: java.util.Set<java.lang.String>
      */
-    public static Set<String> keys(Object pattern){
+    public static Set<String> keys(String pattern){
         return redisTemplate.keys(pattern);
     }
     /**
@@ -151,7 +153,7 @@ public class RedisUtils {
      * @param: maps
      * @return: void
      */
-    public static void multiSet(Map<String, Object> maps){
+    public static void multiSet(Map<String, String> maps){
         redisTemplate.opsForValue().multiSet(maps);
     }
     /**
@@ -209,7 +211,7 @@ public class RedisUtils {
      * @param: fieldList
      * @return: java.util.List<java.lang.Object>
      */
-    public static List<Object> hGetAll(String key, List<String> fieldList){
+    public static List<Object> hGetAll(String key, List<Object> fieldList){
         return redisTemplate.opsForHash().multiGet(key, fieldList);
     }
     /**
@@ -253,7 +255,7 @@ public class RedisUtils {
      * @param: key
      * @return: java.util.Set<java.lang.String>
      */
-    public Set<String> hKeys(String key){
+    public Set<Object> hKeys(String key){
         return redisTemplate.opsForHash().keys(key);
     }
     /**
@@ -309,7 +311,7 @@ public class RedisUtils {
      * @param: value
      * @return: java.lang.Long
      */
-    public static Long lLeftPush(String key, Object value){
+    public static Long lLeftPush(String key, String value){
         return redisTemplate.opsForList().leftPush(key, value);
     }
     /**
@@ -320,7 +322,7 @@ public class RedisUtils {
      * @param: values
      * @return: java.lang.Long
      */
-    public static Long lLeftPushAll(String key, Object ... values){
+    public static Long lLeftPushAll(String key, String ... values){
         return redisTemplate.opsForList().leftPushAll(key, values);
     }
     /**
@@ -331,7 +333,7 @@ public class RedisUtils {
      * @param: values
      * @return: java.lang.Long
      */
-    public static Long lLeftPushAll(String key, Collection<Object> values){
+    public static Long lLeftPushAll(String key, Collection<String> values){
         return redisTemplate.opsForList().leftPushAll(key, values);
     }
 
@@ -343,7 +345,7 @@ public class RedisUtils {
      * @param: value
      * @return: java.lang.Long
      */
-    public static Long lrightPush(String key, Object value){
+    public static Long lrightPush(String key, String value){
         return redisTemplate.opsForList().rightPush(key, value);
     }
     /**
@@ -354,7 +356,7 @@ public class RedisUtils {
      * @param: values
      * @return: java.lang.Long
      */
-    public static Long lrightPushAll(String key, Object ... values){
+    public static Long lrightPushAll(String key, String ... values){
         return redisTemplate.opsForList().rightPushAll(key, values);
     }
     /**
@@ -365,7 +367,7 @@ public class RedisUtils {
      * @param: values
      * @return: java.lang.Long
      */
-    public static Long lrightPushAll(String key, Collection<Object> values){
+    public static Long lrightPushAll(String key, Collection<String> values){
         return redisTemplate.opsForList().rightPushAll(key, values);
     }
     /**
@@ -433,8 +435,8 @@ public class RedisUtils {
      * @param: value
      * @return: java.lang.Long
      */
-    public Long sAddAll(String key, Object... values){
-        return redisTemplate.opsForSet().add(values);
+    public Long sAddAll(String key, String... values){
+        return redisTemplate.opsForSet().add(key, values);
     }
     /**
      * @author: water76016
@@ -465,7 +467,7 @@ public class RedisUtils {
      * @param: count
      * @return: java.util.List<java.lang.Object>
      */
-    public List<Object> sPop(String key, long count){
+    public List<String> sPop(String key, long count){
         return redisTemplate.opsForSet().pop(key, count);
     }
     /**
@@ -497,7 +499,7 @@ public class RedisUtils {
      * @param: otherKey
      * @return: java.util.Set<java.lang.Object>
      */
-    public Set<Object> sIntersect(String key, String otherKey){
+    public Set<String> sIntersect(String key, String otherKey){
         return redisTemplate.opsForSet().intersect(key, otherKey);
     }
 
@@ -509,7 +511,7 @@ public class RedisUtils {
      * @param: otherKey
      * @return: java.util.Set<java.lang.Object>
      */
-    public Set<Object> sIntersect(String key, Set<String> otherKey){
+    public Set<String> sIntersect(String key, Set<String> otherKey){
         return redisTemplate.opsForSet().intersect(key, otherKey);
     }
 
@@ -521,7 +523,7 @@ public class RedisUtils {
      * @param: otherKey
      * @return: java.util.Set<java.lang.Object>
      */
-    public Set<Object> sIntersect(Set<String> keys){
+    public Set<String> sIntersect(Set<String> keys){
         return redisTemplate.opsForSet().intersect(keys);
     }
     /**
@@ -532,7 +534,7 @@ public class RedisUtils {
      * @param: otherKey
      * @return: java.util.Set<java.lang.Object>
      */
-    public Set<Object> sUnion(String key, String otherKey){
+    public Set<String> sUnion(String key, String otherKey){
         return redisTemplate.opsForSet().union(key, otherKey);
     }
 
@@ -544,7 +546,7 @@ public class RedisUtils {
      * @param: otherKey
      * @return: java.util.Set<java.lang.Object>
      */
-    public Set<Object> sUnion(String key, Set<String> otherKey){
+    public Set<String> sUnion(String key, Set<String> otherKey){
         return redisTemplate.opsForSet().union(key, otherKey);
     }
 
@@ -556,7 +558,7 @@ public class RedisUtils {
      * @param: otherKey
      * @return: java.util.Set<java.lang.Object>
      */
-    public Set<Object> sUnion(Set<String> keys){
+    public Set<String> sUnion(Set<String> keys){
         return redisTemplate.opsForSet().union(keys);
     }
     /**
@@ -653,6 +655,85 @@ public class RedisUtils {
 //    public List<Object> sRandomMembers(String key, long count){
 //        return redisTemplate.opsForSet().randomMember(key, count);
 //    }
+
+
+    /************************有序集合相关操作********************************/
+    /**
+     * @author: water76016
+     * @createTime: 2022年11月14 23:48:15
+     * @description: 往有序集合里面添加元素
+     * @param: key
+     * @param: value
+     * @param: score
+     * @return: boolean
+     */
+    public boolean zAdd(String key, String value, double score){
+        return redisTemplate.opsForZSet().add(key, value, score);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年11月14 23:51:14
+     * @description: 往有序集合里面批量添加元素
+     * @param: key
+     * @param: values
+     * @return: java.lang.Long
+     */
+    public Long zAdd(String key, Set<ZSetOperations.TypedTuple<String>> values){
+        return redisTemplate.opsForZSet().add(key, values);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年11月14 23:53:30
+     * @description: 批量移除有序集合中的元素
+     * @param: key
+     * @param: values
+     * @return: java.lang.Long
+     */
+    public Long zRemove(String key, Object... values){
+        return redisTemplate.opsForZSet().remove(key, values);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年11月14 23:54:42
+     * @description: 对有序集合中的某个value，增加delta的分数，并返回增加后的分数
+     * @param: key
+     * @param: value
+     * @param: delta
+     * @return: java.lang.Double
+     */
+    public Double zIncrementScore(String key, String value, double delta){
+        return redisTemplate.opsForZSet().incrementScore(key, value, delta);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年11月14 23:56:25
+     * @description: 返回元素在有序集合中的排名，有序集合是按照score由小到大进行排列
+     * @param: key
+     * @param: value
+     * @return: java.lang.Long
+     */
+    public Long zRank(String key, Object value){
+        return redisTemplate.opsForZSet().rank(key, value);
+    }
+    /**
+     * @author: water76016
+     * @createTime: 2022年11月14 23:58:50
+     * @description: 返回元素在有序集合中的排名，按照score由大到小进行排列
+     * @param: key
+     * @param: value
+     * @return: java.lang.Long
+     */
+    public Long zReverseRank(String key, Object value){
+        return redisTemplate.opsForZSet().reverseRank(key, value);
+    }
+
+    //todo:获取集合的元素, 从小到大排序
+
+
+
+
+
+
 
 
 
